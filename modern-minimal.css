@@ -14,7 +14,7 @@
 }
 
 /* Thin brand bar across the top instead of the hero image */
-html body { /* html raises specificity over Gecko public.css */
+html body:has(.public-form-holder) { /* full-page view only, not embeds */
   padding-top: 0;
   border-top: 4px solid var(--gf-accent);
 }
@@ -113,7 +113,7 @@ main > .row {
 }
 
 /* The header already has a divider, so drop the first section's rule */
-.public-form-holder .form-page > .gecko-field-type-section:first-of-type hr.noPaddingBottom {
+:is(.public-form-holder, .publicForm) .form-page > .gecko-field-type-section:first-of-type hr.noPaddingBottom {
   display: none;
 }
 
