@@ -14,7 +14,7 @@
 }
 
 /* Thin brand bar across the top instead of the hero image */
-body {
+html body { /* html raises specificity over Gecko public.css */
   padding-top: 0;
   border-top: 4px solid var(--gf-accent);
 }
@@ -66,6 +66,10 @@ body {
   opacity: 1;
 }
 
+.modern-description:empty {
+  display: none;
+}
+
 /* --------------------------------------------------------------------------
    Form: no card, same column as the header
    -------------------------------------------------------------------------- */
@@ -93,6 +97,9 @@ main > .row {
 }
 
 @media (max-width: 767px) {
+  :root {
+    --gf-gutter: 8px; /* Bootstrap's container already adds 15px */
+  }
   .modern-logo-container {
     padding-top: 32px;
   }

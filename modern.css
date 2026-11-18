@@ -49,7 +49,7 @@
    Page + header
    -------------------------------------------------------------------------- */
 
-body {
+html body { /* html raises specificity over Gecko public.css */
   background-color: var(--gf-page-bg);
   font-family: var(--gf-font);
   color: var(--gf-text);
