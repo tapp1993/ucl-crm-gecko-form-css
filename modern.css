@@ -1,0 +1,708 @@
+/* ==========================================================================
+   UCL CRM – Gecko "Modern" form theme
+   Version: v0
+   Target: app.geckoform.com/public/#/modern/<form-id>
+
+   Load AFTER Gecko's own stylesheets (Gecko's custom stylesheet import does
+   this). Selectors are scoped under `.public-form-holder` where possible so
+   they win over Gecko defaults without needing !important.
+
+   Tweak the look by editing the tokens in :root below.
+   ========================================================================== */
+
+:root {
+  /* Brand */
+  --gf-accent: #314851;            /* matches the form's header colour */
+  --gf-accent-hover: #233740;
+  --gf-accent-soft: #eaf0f2;       /* tinted backgrounds (selected options) */
+  --gf-accent-ring: rgba(49, 72, 81, 0.28);
+
+  /* Neutrals */
+  --gf-page-bg: #f3f5f7;
+  --gf-card-bg: #ffffff;
+  --gf-text: #111827;
+  --gf-text-muted: #4b5563;
+  --gf-border: #c9d0d8;
+  --gf-border-strong: #8b94a2;
+  --gf-divider: #e5e7eb;
+
+  /* States */
+  --gf-error: #b91c1c;
+  --gf-error-soft: #fef2f2;
+  --gf-info-soft: #f4f7f9;
+
+  /* Shape & rhythm */
+  --gf-radius: 8px;
+  --gf-radius-lg: 14px;
+  --gf-field-gap: 28px;
+  --gf-control-pad-y: 12px;
+  --gf-control-pad-x: 14px;
+  --gf-shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.08);
+  --gf-font: "Satoshi-Gecko", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   Page + header
+   -------------------------------------------------------------------------- */
+
+body {
+  background-color: var(--gf-page-bg);
+  font-family: var(--gf-font);
+  color: var(--gf-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.modern-logo-container {
+  margin-top: 48px;
+  padding: 0 16px;
+}
+
+.modern-title.page-title {
+  font-size: clamp(26px, 4vw, 36px) !important; /* Gecko sets 30px inline */
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.modern-description {
+  font-size: 17px;
+  line-height: 1.5;
+  opacity: 0.92;
+  max-width: 640px;
+  margin: 8px auto 0;
+}
+
+/* Soften the hero into the page instead of a hard edge */
+.modern-image-container,
+.modern-image,
+.modern-color {
+  height: 360px;
+}
+
+.modern-image-container::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.18));
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Form card
+   -------------------------------------------------------------------------- */
+
+.public-form-holder {
+  max-width: 760px !important; /* Gecko sets 1000px inline */
+  background: var(--gf-card-bg);
+  border: 0;
+  border-radius: var(--gf-radius-lg);
+  box-shadow: var(--gf-shadow-card);
+  padding: 40px 48px 32px;
+}
+
+@media (max-width: 767px) {
+  .public-form-holder {
+    padding: 24px 20px;
+    border-radius: 10px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
+
+.public-form-holder form {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Field rhythm, labels, help text
+   -------------------------------------------------------------------------- */
+
+.public-form-holder .gecko-field.form-group {
+  margin-bottom: var(--gf-field-gap);
+}
+
+.public-form-holder .field-label-wrapper {
+  margin-bottom: 8px;
+}
+
+.public-form-holder .field-label,
+.public-form-holder .field-title {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--gf-text);
+}
+
+.public-form-holder .field-label .required {
+  color: var(--gf-error);
+  margin-left: 2px;
+}
+
+.public-form-holder .help-block {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--gf-text-muted);
+  margin-top: 4px;
+}
+
+/* Sub-labels inside multi-part fields (First / Last name, Day / Month / Year) */
+.public-form-holder .multi-field-wrapper label,
+.public-form-holder date-field-input label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gf-text-muted);
+  margin-bottom: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   Section headings
+   -------------------------------------------------------------------------- */
+
+.public-form-holder .gecko-field-type-section hr.noPaddingBottom {
+  border-top: 1px solid var(--gf-divider);
+  margin: 8px 0 28px;
+}
+
+/* No divider above the very first section on a page */
+.public-form-holder .form-page > .gecko-field-type-section:first-of-type hr.noPaddingBottom,
+.public-form-holder .form-page > .ng-hide + .gecko-field-type-section hr.noPaddingBottom {
+  display: none;
+}
+
+.public-form-holder .gecko-field-type-section h2 {
+  font-size: 22px !important; /* Gecko sets 24px inline */
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin: 0 0 4px;
+  padding-left: 14px;
+  border-left: 4px solid var(--gf-accent);
+}
+
+.public-form-holder .gecko-field-type-section .help-block:not(:empty) {
+  padding-left: 18px;
+  margin-top: 6px;
+}
+
+.public-form-holder .gecko-field-type-section.form-group {
+  margin-bottom: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   Text inputs, textareas, number, date parts
+   -------------------------------------------------------------------------- */
+
+.public-form-holder .form-control {
+  font-size: 16px; /* 16px stops iOS zooming on focus */
+  line-height: 1.5;
+  color: var(--gf-text);
+  background-color: #fff;
+  border: 1px solid var(--gf-border-strong);
+  border-radius: var(--gf-radius);
+  padding: var(--gf-control-pad-y) var(--gf-control-pad-x);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.public-form-holder .form-control::placeholder {
+  color: #6b7280;
+}
+
+.public-form-holder .form-control:hover {
+  border-color: var(--gf-text-muted);
+}
+
+.public-form-holder .form-control:focus,
+.public-form-holder .form-control:focus-visible {
+  outline: none;
+  border-color: var(--gf-accent);
+  box-shadow: 0 0 0 4px var(--gf-accent-ring);
+}
+
+.public-form-holder textarea.form-control {
+  min-height: 140px;
+  resize: vertical;
+}
+
+/* Name field: side-by-side on desktop, stacked on mobile */
+.public-form-holder .gecko-field-type-name > div > div {
+  gap: 16px;
+}
+.public-form-holder .gecko-field-type-name > div > div div.gecko-field-type-name-first-name {
+  margin-right: 0;
+}
+@media (max-width: 575px) {
+  .public-form-holder .gecko-field-type-name > div > div {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* Date field: consistent gaps, readable widths */
+.public-form-holder date-field date-field-input {
+  gap: 12px;
+}
+.public-form-holder date-field date-field-input > div {
+  margin-left: 0 !important;
+}
+.public-form-holder date-field date-field-input .date-field-input-day input,
+.public-form-holder date-field date-field-input .date-field-input-month input {
+  width: 72px;
+  text-align: center;
+}
+.public-form-holder date-field date-field-input .date-field-input-year input {
+  width: 104px;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Radio + checkbox lists → tappable option cards
+   -------------------------------------------------------------------------- */
+
+.public-form-holder .gecko-field .radio,
+.public-form-holder .gecko-field .checkbox {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0 0 8px;
+  padding: 12px 14px;
+  border: 1px solid var(--gf-border);
+  border-radius: var(--gf-radius);
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.public-form-holder .gecko-field .radio + .radio,
+.public-form-holder .gecko-field .checkbox + .checkbox {
+  margin-top: 0;
+}
+
+.public-form-holder .gecko-field .radio:hover,
+.public-form-holder .gecko-field .checkbox:hover {
+  border-color: var(--gf-border-strong);
+  background: #fafbfc;
+}
+
+.public-form-holder .gecko-field .radio input,
+.public-form-holder .gecko-field .checkbox input,
+.public-form-holder .gecko-field-checkbox-true-false input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin: 1px 0 0 !important;
+  accent-color: var(--gf-accent);
+  cursor: pointer;
+}
+
+.public-form-holder .gecko-field .radio label,
+.public-form-holder .gecko-field .checkbox label {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--gf-text);
+  cursor: pointer;
+}
+
+/* Make the whole card clickable: stretch the label over it */
+.public-form-holder .gecko-field .radio label::after,
+.public-form-holder .gecko-field .checkbox label::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+/* Selected state */
+.public-form-holder .gecko-field .radio:has(input:checked),
+.public-form-holder .gecko-field .checkbox:has(input:checked) {
+  border-color: var(--gf-accent);
+  background: var(--gf-accent-soft);
+  box-shadow: inset 0 0 0 1px var(--gf-accent);
+}
+
+.public-form-holder .gecko-field .radio:has(input:checked) label,
+.public-form-holder .gecko-field .checkbox:has(input:checked) label {
+  font-weight: 500;
+}
+
+/* Keyboard focus on the card */
+.public-form-holder .gecko-field .radio:has(input:focus-visible),
+.public-form-holder .gecko-field .checkbox:has(input:focus-visible) {
+  box-shadow: 0 0 0 4px var(--gf-accent-ring);
+  border-color: var(--gf-accent);
+}
+.public-form-holder .gecko-field .radio input:focus,
+.public-form-holder .gecko-field .checkbox input:focus {
+  outline: none;
+}
+
+/* Single true/false checkbox (e.g. consent / agreement) */
+.public-form-holder .gecko-field-checkbox-true-false {
+  align-items: flex-start !important;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--gf-border);
+  border-radius: var(--gf-radius);
+  background: #fff;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.public-form-holder .gecko-field-checkbox-true-false > .gecko-field-checkbox-true-false-field-input {
+  margin-right: 0;
+}
+.public-form-holder .gecko-field-checkbox-true-false:has(input:checked) {
+  border-color: var(--gf-accent);
+  background: var(--gf-accent-soft);
+}
+.public-form-holder .gecko-field-checkbox-true-false label {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.public-form-holder .gecko-field-checkbox-true-false-field-label-container > div p {
+  font-size: 14px !important;
+  color: var(--gf-text-muted);
+  margin: 4px 0 0;
+}
+
+/* --------------------------------------------------------------------------
+   Dropdowns (Chosen) – single + multi
+   -------------------------------------------------------------------------- */
+
+.public-form-holder .chosen-container {
+  font-size: 16px;
+}
+
+.public-form-holder .chosen-container .chosen-single,
+.public-form-holder .chosen-container.chosen-container-multi {
+  border: 1px solid var(--gf-border-strong);
+  border-radius: var(--gf-radius);
+  padding: var(--gf-control-pad-y) 40px var(--gf-control-pad-y) var(--gf-control-pad-x);
+  line-height: 1.5;
+  min-height: 50px;
+}
+
+.public-form-holder .chosen-container.chosen-container-multi {
+  padding: 4px 8px;
+}
+
+.public-form-holder .chosen-container.chosen-container-multi .chosen-choices {
+  padding: 0 6px;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 40px;
+}
+
+.public-form-holder .chosen-container.chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+  font-size: 16px;
+  padding: 8px 0 !important;
+}
+
+.public-form-holder .chosen-container .chosen-single:hover,
+.public-form-holder .chosen-container.chosen-container-multi:hover {
+  border-color: var(--gf-text-muted);
+}
+
+.public-form-holder .chosen-container.chosen-container-single.chosen-container-active .chosen-single,
+.public-form-holder .chosen-container.chosen-container-single.chosen-container-active.chosen-with-drop .chosen-single,
+.public-form-holder .chosen-container.chosen-container-multi.chosen-container-active {
+  border-color: var(--gf-accent);
+  box-shadow: 0 0 0 4px var(--gf-accent-ring);
+}
+
+.public-form-holder .chosen-container-single .chosen-default {
+  color: #6b7280;
+}
+
+/* Selected tags in multi-select */
+.public-form-holder .chosen-container .chosen-choices li.search-choice {
+  background: var(--gf-accent-soft);
+  color: var(--gf-accent-hover);
+  border-radius: 999px;
+  font-size: 14px;
+  padding: 4px 10px 4px 12px;
+  margin: 0;
+}
+
+/* Dropdown panel */
+.public-form-holder .chosen-container .chosen-drop {
+  border: 1px solid var(--gf-divider) !important;
+  border-radius: var(--gf-radius);
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.12);
+  padding: 6px;
+  margin-top: 6px;
+}
+
+.public-form-holder .chosen-container .chosen-results li {
+  font-size: 15px;
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+
+.public-form-holder .chosen-container .chosen-results li.highlighted,
+.public-form-holder .chosen-container .chosen-results li:hover {
+  background: var(--gf-accent);
+  color: #fff;
+}
+
+.public-form-holder .chosen-container.chosen-container-single .chosen-search input[type="text"] {
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   Info / script blocks → soft callout
+   -------------------------------------------------------------------------- */
+
+.public-form-holder .gecko-field-type-script > div:not(.field-label-wrapper) [gecko-bind-html]:not(:empty) {
+  background: var(--gf-info-soft);
+  border: 1px solid var(--gf-divider);
+  border-left: 4px solid var(--gf-accent);
+  border-radius: var(--gf-radius);
+  padding: 16px 18px;
+  color: var(--gf-text);
+}
+
+.public-form-holder .gecko-field-type-script h2,
+.public-form-holder .gecko-field-type-script h3 {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 6px;
+}
+
+.public-form-holder .gecko-field-type-script p {
+  margin: 0 0 8px;
+  color: var(--gf-text-muted);
+}
+.public-form-holder .gecko-field-type-script p:last-child,
+.public-form-holder .gecko-field-type-script h2:last-child,
+.public-form-holder .gecko-field-type-script h3:last-child {
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   File upload + repeatable "Add" buttons
+   -------------------------------------------------------------------------- */
+
+.public-form-holder .file-picker-field > .btn,
+.public-form-holder .repeatable .btn-default {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--gf-accent);
+  background: #fff;
+  border: 1px dashed var(--gf-border-strong);
+  border-radius: var(--gf-radius);
+}
+
+.public-form-holder .file-picker-field > .btn:hover,
+.public-form-holder .repeatable .btn-default:hover {
+  background: var(--gf-accent-soft);
+  border-color: var(--gf-accent);
+}
+
+.file-picker-modal .drop-area.dragging-over {
+  background-color: var(--gf-accent-soft);
+  border-color: var(--gf-accent);
+}
+
+.file-picker-modal .modal-content {
+  border-radius: var(--gf-radius-lg);
+  border: 0;
+  box-shadow: var(--gf-shadow-card);
+}
+
+/* --------------------------------------------------------------------------
+   Validation errors
+   -------------------------------------------------------------------------- */
+
+.public-form-holder .has-error .form-control,
+.public-form-holder .has-error .chosen-container > .chosen-single,
+.public-form-holder .has-error .chosen-container.chosen-container-multi {
+  border-color: var(--gf-error) !important;
+  background-color: var(--gf-error-soft);
+}
+
+.public-form-holder .has-error .form-control:focus {
+  box-shadow: 0 0 0 4px rgba(185, 28, 28, 0.2) !important;
+}
+
+.public-form-holder .has-error .radio,
+.public-form-holder .has-error .checkbox {
+  border-color: #f3b4b4;
+}
+
+.public-form-holder .has-error .help-block,
+.public-form-holder .has-error .field-label {
+  color: var(--gf-error);
+}
+
+.public-form-holder .alert {
+  border-radius: var(--gf-radius);
+  border: 0;
+  padding: 14px 16px;
+  font-size: 15px;
+}
+.public-form-holder .alert-danger {
+  background: var(--gf-error-soft);
+  color: var(--gf-error);
+  border-left: 4px solid var(--gf-error);
+}
+.public-form-holder .alert-success {
+  background: #ecfdf3;
+  color: #065f46;
+  border-left: 4px solid #10b981;
+}
+
+/* --------------------------------------------------------------------------
+   Pagination, progress + navigation buttons
+   -------------------------------------------------------------------------- */
+
+.public-form-holder .page-count {
+  display: block;
+  width: fit-content;
+  margin: 8px auto 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--gf-text-muted);
+  background: var(--gf-info-soft);
+  border-radius: 999px;
+}
+
+.public-form-holder .progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--gf-divider);
+  box-shadow: none;
+}
+.public-form-holder .progress > span {
+  display: none;
+}
+.public-form-holder .progress-bar {
+  background-color: var(--gf-accent) !important;
+  box-shadow: none;
+  border-radius: 999px;
+}
+
+.public-form-holder .submitButtons {
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--gf-divider);
+}
+
+.public-form-holder .submitButtons > div {
+  flex: 1 1 auto;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Keep "Next" on the right even when "Previous" is hidden */
+.public-form-holder .submitButtons #form-next {
+  margin-left: auto;
+}
+
+.public-form-holder .gecko-btn.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--gf-radius);
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+}
+
+.public-form-holder .gecko-btn.btn:active {
+  transform: translateY(1px);
+}
+
+.public-form-holder .gecko-btn.btn-primary {
+  background: var(--gf-accent);
+  border-color: var(--gf-accent);
+  color: #fff;
+}
+
+.public-form-holder .gecko-btn.btn-primary:hover {
+  background: var(--gf-accent-hover);
+  border-color: var(--gf-accent-hover);
+  color: #fff;
+}
+
+.public-form-holder .gecko-btn.btn-primary:focus,
+.public-form-holder .gecko-btn.btn-primary:focus-visible {
+  background: var(--gf-accent-hover);
+  border-color: var(--gf-accent-hover);
+  outline: none;
+  box-shadow: 0 0 0 4px var(--gf-accent-ring);
+}
+
+.public-form-holder .submitButtons .gecko-btn.btn-default {
+  background: #fff;
+  color: var(--gf-text);
+  border: 1px solid var(--gf-border-strong);
+}
+.public-form-holder .submitButtons .gecko-btn.btn-default:hover {
+  background: #f9fafb;
+  border-color: var(--gf-text-muted);
+}
+.public-form-holder .gecko-btn.btn-default:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--gf-accent-ring);
+}
+
+/* Submit sits on its own row at the end — make it the obvious action */
+.public-form-holder #form-submit {
+  margin-left: auto;
+  min-width: 160px;
+}
+
+@media (max-width: 575px) {
+  .public-form-holder .submitButtons,
+  .public-form-holder .submitButtons > div {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .public-form-holder .submitButtons .gecko-btn.btn {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.powered_by {
+  background: transparent;
+  font-size: 13px;
+  color: var(--gf-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Motion preferences
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .public-form-holder *,
+  .public-form-holder *::before,
+  .public-form-holder *::after {
+    transition: none !important;
+  }
+}
