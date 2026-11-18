@@ -560,6 +560,18 @@ body {
   color: var(--gf-error);
   border-left: 4px solid var(--gf-error);
 }
+.public-form-holder .alert-danger p {
+  margin: 0 0 4px;
+}
+.public-form-holder .alert-danger ul {
+  margin: 0;
+  padding-left: 20px;
+}
+.public-form-holder .alert-danger a {
+  color: var(--gf-error);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 .public-form-holder .alert-success {
   background: #ecfdf3;
   color: #065f46;
@@ -601,8 +613,7 @@ body {
 .public-form-holder .submitButtons {
   justify-content: space-between;
   gap: 12px;
-  padding-top: 24px;
-  border-top: 1px solid var(--gf-divider);
+  padding-top: 8px;
 }
 
 .public-form-holder .submitButtons > div {
