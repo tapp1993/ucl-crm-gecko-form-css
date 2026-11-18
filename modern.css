@@ -43,6 +43,9 @@
 
   /* Text added after labels of non-required fields. Set to "" to turn off. */
   --gf-optional-text: " (optional)";
+
+  /* Shown in an empty multi-select on phones */
+  --gf-multi-placeholder: "Tap to choose";
 }
 
 /* --------------------------------------------------------------------------
@@ -468,6 +471,103 @@ html body { /* html raises specificity over Gecko public.css */
 .public-form-holder .chosen-container.chosen-container-single .chosen-search input[type="text"] {
   border-radius: 6px;
   font-size: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   Dropdowns on phones
+   On touch devices Gecko swaps Chosen for a native <select> with a tap mask
+   (mobile-dropdown-field) that opens a pop-up picker. A native multi-select
+   renders as a 4-row scrolling listbox, so collapse it to look like one field:
+   placeholder when empty, the picked options listed when not.
+   -------------------------------------------------------------------------- */
+
+.public-form-holder .select-wrapper:has(> mobile-dropdown-field) > select.form-control {
+  min-height: 50px;
+  padding-right: 44px;
+  cursor: pointer;
+}
+
+.public-form-holder .select-wrapper:has(> mobile-dropdown-field) > select[multiple].form-control {
+  height: auto;
+  overflow: hidden;
+  scrollbar-width: none;
+  field-sizing: content; /* grow with the picked options */
+}
+.public-form-holder .select-wrapper:has(> mobile-dropdown-field) > select[multiple]::-webkit-scrollbar {
+  display: none;
+}
+
+.public-form-holder .select-wrapper:has(> mobile-dropdown-field) > select[multiple] option:not(:checked) {
+  display: none;
+}
+
+.public-form-holder .select-wrapper:has(> mobile-dropdown-field) > select[multiple] option:checked {
+  /* the gradient overrides the browser's grey selection highlight */
+  background: transparent linear-gradient(transparent, transparent);
+  color: var(--gf-text);
+  padding: 2px 0;
+}
+
+.public-form-holder .select-wrapper:has(> mobile-dropdown-field):has(> select[multiple].ng-empty)::before {
+  content: var(--gf-multi-placeholder);
+  position: absolute;
+  top: 50%;
+  left: calc(var(--gf-control-pad-x) + 1px);
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #6b7280;
+  pointer-events: none;
+}
+
+/* The pop-up picker */
+.public-form-holder .select-wrapper mobile-dropdown-field .mobile-dropdown-field-modal .modal-content {
+  border: 0;
+  border-radius: var(--gf-radius-lg);
+  box-shadow: 0 20px 50px rgba(16, 24, 40, 0.25);
+}
+
+.public-form-holder .select-wrapper mobile-dropdown-field .mobile-dropdown-field-modal .modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gf-divider);
+}
+
+.public-form-holder .select-wrapper mobile-dropdown-field .mobile-dropdown-field-modal .modal-title {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.public-form-holder .select-wrapper mobile-dropdown-field .mobile-dropdown-field-modal .modal-body {
+  padding: 12px 20px 16px;
+}
+
+.public-form-holder .select-wrapper mobile-dropdown-field .mobile-dropdown-field-modal .modal-body .mobile-dropdown-field-modal-search .form-control {
+  height: 46px;
+  margin-bottom: 4px;
+}
+
+.public-form-holder .select-wrapper mobile-dropdown-field .mobile-dropdown-field-modal .modal-body .mobile-dropdown-field-modal-list-wrapper li + li {
+  border-top: 1px solid var(--gf-divider);
+}
+
+.public-form-holder .select-wrapper mobile-dropdown-field .mobile-dropdown-field-modal .modal-body .mobile-dropdown-field-modal-list-wrapper .mobile-dropdown-field-modal-mulitple-select-list label,
+.public-form-holder .select-wrapper mobile-dropdown-field .mobile-dropdown-field-modal .modal-body .mobile-dropdown-field-modal-list-wrapper .mobile-dropdown-field-modal-single-select-list label {
+  padding: 13px 2px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.public-form-holder .select-wrapper mobile-dropdown-field .mobile-dropdown-field-modal .modal-body .mobile-dropdown-field-modal-list-wrapper .mobile-dropdown-field-modal-mulitple-select-list input {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin: 0 12px 0 2px;
+  accent-color: var(--gf-accent);
+}
+
+.public-form-holder .select-wrapper mobile-dropdown-field .mobile-dropdown-field-modal .modal-body .mobile-dropdown-field-modal-list-wrapper .mobile-dropdown-field-modal-mulitple-select-list div input:checked + label,
+.public-form-holder .select-wrapper mobile-dropdown-field .mobile-dropdown-field-modal .modal-body .mobile-dropdown-field-modal-list-wrapper .mobile-dropdown-field-modal-single-select-list input:checked + label {
+  font-weight: 600;
+  color: var(--gf-accent);
 }
 
 /* --------------------------------------------------------------------------
