@@ -4,7 +4,10 @@ Custom stylesheets for GeckoEngage public forms.
 
 | File | Layout | Status |
 | --- | --- | --- |
-| `modern.css` | Modern | v0 |
+| `modern.css` | Modern – hero image header, form on a floating card | v0.1 |
+| `modern-minimal.css` | Modern – plain white page, accent bar, no hero image or card (imports `modern.css`) | main |
+
+Import **one** of them. For the minimal frame, swap `modern.css` for `modern-minimal.css` in the URLs below.
 
 ## Using it in Gecko
 
