@@ -1,0 +1,106 @@
+/* ==========================================================================
+   UCL CRM – Gecko "Modern" form theme – MINIMAL frame
+   Builds on modern.css (all field, validation and button styling) and
+   replaces the hero image header + floating card with a plain, frameless
+   page: thin accent bar, left-aligned title, one clean content column.
+   ========================================================================== */
+
+@import url("modern.css");
+
+:root {
+  --gf-page-bg: #ffffff;
+  --gf-column: 720px;        /* width of the title + form column */
+  --gf-gutter: 24px;         /* side padding on small screens */
+}
+
+/* Thin brand bar across the top instead of the hero image */
+body {
+  padding-top: 0;
+  border-top: 4px solid var(--gf-accent);
+}
+
+.modern-image-container {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Header: dark text, left-aligned to the form column
+   -------------------------------------------------------------------------- */
+
+.modern-logo-container {
+  color: var(--gf-text) !important; /* Gecko sets white inline */
+  text-align: left !important;
+  margin: 0 !important;
+  padding: 56px var(--gf-gutter) 0;
+}
+
+.modern-logo-holder {
+  display: block;
+  max-width: var(--gf-column);
+  margin: 0 auto;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--gf-divider);
+}
+
+.modern-logo-container .modern-logo {
+  display: block;
+  max-height: 56px;
+  max-width: 240px !important;
+  margin: 0 0 28px;
+}
+
+.modern-title.page-title {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 34px) !important;
+  font-weight: 700;
+  color: var(--gf-text);
+  text-wrap: balance;
+}
+
+.modern-description {
+  margin: 10px 0 0 !important;
+  max-width: none;
+  font-size: 17px !important;
+  color: var(--gf-text-muted);
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Form: no card, same column as the header
+   -------------------------------------------------------------------------- */
+
+main {
+  margin-top: 0 !important; /* Gecko sets 30px inline */
+}
+
+.public-form-holder {
+  max-width: calc(var(--gf-column) + 2 * var(--gf-gutter)) !important;
+  margin: 0 auto 40px !important;
+  padding: 32px var(--gf-gutter) 24px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@media (max-width: 767px) {
+  .modern-logo-container {
+    padding-top: 32px;
+  }
+  .modern-logo-holder {
+    padding-bottom: 20px;
+  }
+  .public-form-holder {
+    margin: 0 auto 24px !important;
+    padding: 24px var(--gf-gutter) 16px;
+  }
+}
+
+/* The header already has a divider, so drop the first section's rule */
+.public-form-holder .form-page > .gecko-field-type-section:first-of-type hr.noPaddingBottom {
+  display: none;
+}
+
+.powered_by {
+  padding: 0;
+}
