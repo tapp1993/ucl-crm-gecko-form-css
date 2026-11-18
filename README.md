@@ -22,10 +22,10 @@ If the import box takes CSS rather than a URL:
 
 ### Caching
 
-jsDelivr caches `@main` for up to 12 hours. After pushing a change, either:
+jsDelivr caches `@main` for up to 12 hours, and tells browsers they can keep the file for 7 days.
 
-- purge it: open `https://purge.jsdelivr.net/gh/tapp1993/ucl-crm-gecko-form-css@main/modern.css`, or
-- for live forms, pin a tag (`@v0`, `@v1` …) so a change to `main` never alters a live form unexpectedly.
+- While iterating: after pushing, open `https://purge.jsdelivr.net/gh/tapp1993/ucl-crm-gecko-form-css@main/modern.css` (it can take a minute, and sometimes a second purge, to switch over), then hard-refresh the form.
+- For live forms: pin a tag (`@v0`, `@v1` …) and change the URL in Gecko when you release a new version. That way nobody gets a stale cached copy, and a push to `main` never changes a live form unexpectedly.
 
 ## Customising
 
