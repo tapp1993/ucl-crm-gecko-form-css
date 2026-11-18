@@ -34,8 +34,9 @@ body {
   padding: 56px var(--gf-gutter) 0;
 }
 
-.modern-logo-holder {
-  display: block;
+.modern-logo-container .modern-logo-holder {
+  display: block; /* Gecko's inline <style> makes it inline-block */
+  width: 100%;
   max-width: var(--gf-column);
   margin: 0 auto;
   padding-bottom: 28px;
@@ -73,7 +74,15 @@ main {
   margin-top: 0 !important; /* Gecko sets 30px inline */
 }
 
+/* Cancel Bootstrap's row/column offsets so the form lines up with the header */
+main > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .public-form-holder {
+  float: none !important;
+  width: 100% !important;
   max-width: calc(var(--gf-column) + 2 * var(--gf-gutter)) !important;
   margin: 0 auto 40px !important;
   padding: 32px var(--gf-gutter) 24px;
