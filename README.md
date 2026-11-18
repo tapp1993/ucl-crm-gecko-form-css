@@ -9,6 +9,10 @@ Custom stylesheets for GeckoEngage public forms.
 
 Import **one** of them. For the minimal frame, swap `modern.css` for `modern-minimal.css` in the URLs below.
 
+## Where it applies
+
+Gecko only injects a form's **Custom CSS** into its embed view (`/public/#/iframe/<form-id>`, used when the form is embedded on a webpage). The full-page Modern link (`/public/#/modern/<form-id>`) ignores it. The stylesheets work in both views; the Modern-only parts (header, card, page background, accent bar) simply don't appear in embeds.
+
 ## Using it in Gecko
 
 Point Gecko's custom stylesheet import at the jsDelivr URL (GitHub's raw URLs are served as `text/plain`, which browsers refuse to load as CSS):
