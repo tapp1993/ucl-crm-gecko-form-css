@@ -29,6 +29,7 @@
   /* States */
   --gf-error: #b91c1c;
   --gf-error-soft: #fef2f2;
+  --gf-required: #b91c1c;          /* the * after required labels */
   --gf-info-soft: #f4f7f9;
 
   /* Shape & rhythm */
@@ -39,6 +40,9 @@
   --gf-control-pad-x: 14px;
   --gf-shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.08);
   --gf-font: "Satoshi-Gecko", "Helvetica Neue", Arial, sans-serif;
+
+  /* Text added after labels of non-required fields. Set to "" to turn off. */
+  --gf-optional-text: " (optional)";
 }
 
 /* --------------------------------------------------------------------------
@@ -138,8 +142,16 @@ body {
 }
 
 .public-form-holder .field-label .required {
-  color: var(--gf-error);
+  color: var(--gf-required);
   margin-left: 2px;
+}
+
+/* Flag optional fields so people know what they can skip */
+.public-form-holder .gecko-field:not(.field-required) > .field-label-wrapper > .field-label::after,
+.public-form-holder .gecko-field:not(.field-required) > .field-label-wrapper > .field-title::after {
+  content: var(--gf-optional-text);
+  font-weight: 400;
+  color: var(--gf-text-muted);
 }
 
 .public-form-holder .help-block {
@@ -547,6 +559,68 @@ body {
 .public-form-holder .has-error .help-block,
 .public-form-holder .has-error .field-label {
   color: var(--gf-error);
+}
+
+/* Field-level error message: icon + weight so it doesn't rely on colour alone */
+.public-form-holder .gecko-field.has-error > .help-block[role="alert"] {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gf-error);
+}
+
+.public-form-holder .gecko-field.has-error > .help-block[role="alert"]::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1 5h2v7h-2V7Zm0 9h2v2h-2v-2Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1 5h2v7h-2V7Zm0 9h2v2h-2v-2Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Error-summary links jump to fields: leave breathing room above them */
+.public-form-holder .gecko-field {
+  scroll-margin-top: 32px;
+}
+
+/* Once an errored field has been answered, calm the error down.
+   Gecko keeps .has-error until the next Next/Submit, so this signals "sorted". */
+.public-form-holder .gecko-field.has-error:is(
+    :has(input:checked),
+    :has(.form-control):not(:has(.form-control.ng-empty))
+  ) {
+  --gf-error: var(--gf-text);
+  --gf-error-soft: #fff;
+}
+
+.public-form-holder .gecko-field.has-error:is(
+    :has(input:checked),
+    :has(.form-control):not(:has(.form-control.ng-empty))
+  ) > .help-block[role="alert"] {
+  opacity: 0.6;
+  font-weight: 400;
+}
+
+.public-form-holder .gecko-field.has-error:has(input:checked) .radio,
+.public-form-holder .gecko-field.has-error:has(input:checked) .checkbox {
+  border-color: var(--gf-border);
+}
+.public-form-holder .gecko-field.has-error:has(input:checked) .radio:has(input:checked),
+.public-form-holder .gecko-field.has-error:has(input:checked) .checkbox:has(input:checked) {
+  border-color: var(--gf-accent);
+}
+
+.public-form-holder .gecko-field.has-error:is(
+    :has(input:checked),
+    :has(.form-control):not(:has(.form-control.ng-empty))
+  ) .form-control {
+  border-color: var(--gf-border-strong) !important;
+  background-color: #fff;
 }
 
 .public-form-holder .alert {
